@@ -1,0 +1,922 @@
+﻿@{
+    ViewData["Title"] = "Dashboard";
+}
+
+<div class="dashboard-page">
+
+    <!-- HEADER -->
+    <div class="dashboard-header">
+
+        <div>
+            <div class="dashboard-breadcrumb">
+                <span>ERP AI</span>
+                <i class="bi bi-chevron-right"></i>
+                <strong>Dashboard</strong>
+            </div>
+
+            <h1 class="dashboard-title">
+                Visão geral
+            </h1>
+
+            <p class="dashboard-subtitle">
+                Acompanhe suas operações e os insights gerados pela inteligência artificial.
+            </p>
+        </div>
+
+        <div class="dashboard-header-actions">
+
+            <button class="dashboard-date">
+                <i class="bi bi-calendar3"></i>
+                <span>01 Ago — 31 Ago 2026</span>
+                <i class="bi bi-chevron-down"></i>
+            </button>
+
+            <button class="btn btn-primary dashboard-refresh">
+                <i class="bi bi-arrow-clockwise me-2"></i>
+                Atualizar
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- KPI CARDS -->
+    <div class="row g-4 dashboard-kpis">
+
+        <!-- FATURAMENTO -->
+        <div class="col-12 col-md-6 col-xl-3">
+
+            <div class="erp-kpi-card">
+
+                <div class="kpi-header">
+
+                    <div>
+                        <span class="kpi-title">
+                            Faturamento
+                        </span>
+
+                        <div class="kpi-value">
+                            R$ 284.650
+                        </div>
+                    </div>
+
+                    <div class="kpi-icon kpi-blue">
+                        <i class="bi bi-currency-dollar"></i>
+                    </div>
+
+                </div>
+
+                <div class="kpi-bottom">
+
+                    <span class="kpi-growth positive">
+                        <i class="bi bi-arrow-up"></i>
+                        12,8%
+                    </span>
+
+                    <span>
+                        vs. mês anterior
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- PEDIDOS -->
+        <div class="col-12 col-md-6 col-xl-3">
+
+            <div class="erp-kpi-card">
+
+                <div class="kpi-header">
+
+                    <div>
+
+                        <span class="kpi-title">
+                            Pedidos
+                        </span>
+
+                        <div class="kpi-value">
+                            1.284
+                        </div>
+
+                    </div>
+
+                    <div class="kpi-icon kpi-green">
+                        <i class="bi bi-cart-check"></i>
+                    </div>
+
+                </div>
+
+                <div class="kpi-bottom">
+
+                    <span class="kpi-growth positive">
+                        <i class="bi bi-arrow-up"></i>
+                        8,4%
+                    </span>
+
+                    <span>
+                        vs. mês anterior
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- CLIENTES -->
+        <div class="col-12 col-md-6 col-xl-3">
+
+            <div class="erp-kpi-card">
+
+                <div class="kpi-header">
+
+                    <div>
+
+                        <span class="kpi-title">
+                            Clientes ativos
+                        </span>
+
+                        <div class="kpi-value">
+                            3.842
+                        </div>
+
+                    </div>
+
+                    <div class="kpi-icon kpi-purple">
+                        <i class="bi bi-people"></i>
+                    </div>
+
+                </div>
+
+                <div class="kpi-bottom">
+
+                    <span class="kpi-growth positive">
+                        <i class="bi bi-arrow-up"></i>
+                        5,2%
+                    </span>
+
+                    <span>
+                        este mês
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- ALERTAS -->
+        <div class="col-12 col-md-6 col-xl-3">
+
+            <div class="erp-kpi-card">
+
+                <div class="kpi-header">
+
+                    <div>
+
+                        <span class="kpi-title">
+                            Alertas IA
+                        </span>
+
+                        <div class="kpi-value">
+                            17
+                        </div>
+
+                    </div>
+
+                    <div class="kpi-icon kpi-orange">
+                        <i class="bi bi-stars"></i>
+                    </div>
+
+                </div>
+
+                <div class="kpi-bottom">
+
+                    <span class="kpi-growth warning">
+                        <i class="bi bi-exclamation-circle"></i>
+                        5 críticos
+                    </span>
+
+                    <span>
+                        requer atenção
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- LINHA PRINCIPAL -->
+    <div class="row g-4 mt-1">
+
+        <!-- FATURAMENTO -->
+        <div class="col-12 col-xl-8">
+
+            <div class="erp-panel">
+
+                <div class="panel-header">
+
+                    <div>
+                        <h5>
+                            Faturamento
+                        </h5>
+
+                        <span>
+                            Evolução mensal
+                        </span>
+                    </div>
+
+                    <div class="panel-actions">
+
+                        <button class="chart-filter active">
+                            Mensal
+                        </button>
+
+                        <button class="chart-filter">
+                            Anual
+                        </button>
+
+                        <button class="panel-more">
+                            <i class="bi bi-three-dots"></i>
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <!-- GRÁFICO -->
+                <div class="sales-chart">
+
+                    <div class="chart-values">
+
+                        <span>300k</span>
+                        <span>250k</span>
+                        <span>200k</span>
+                        <span>150k</span>
+                        <span>100k</span>
+                        <span>50k</span>
+                        <span>0</span>
+
+                    </div>
+
+
+                    <div class="chart-content">
+
+                        <div class="chart-lines">
+
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                            <div></div>
+
+                        </div>
+
+
+                        <div class="chart-bars">
+
+                            <div class="chart-item">
+                                <div class="sales-bar"
+                                     style="height:55%">
+                                </div>
+                                <span>Fev</span>
+                            </div>
+
+                            <div class="chart-item">
+                                <div class="sales-bar"
+                                     style="height:64%">
+                                </div>
+                                <span>Mar</span>
+                            </div>
+
+                            <div class="chart-item">
+                                <div class="sales-bar"
+                                     style="height:58%">
+                                </div>
+                                <span>Abr</span>
+                            </div>
+
+                            <div class="chart-item">
+                                <div class="sales-bar"
+                                     style="height:72%">
+                                </div>
+                                <span>Mai</span>
+                            </div>
+
+                            <div class="chart-item">
+                                <div class="sales-bar"
+                                     style="height:69%">
+                                </div>
+                                <span>Jun</span>
+                            </div>
+
+                            <div class="chart-item">
+                                <div class="sales-bar"
+                                     style="height:82%">
+                                </div>
+                                <span>Jul</span>
+                            </div>
+
+                            <div class="chart-item current">
+                                <div class="sales-bar"
+                                     style="height:94%">
+                                </div>
+                                <span>Ago</span>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="chart-summary">
+
+                    <div>
+
+                        <span>
+                            Faturamento atual
+                        </span>
+
+                        <strong>
+                            R$ 284.650
+                        </strong>
+
+                    </div>
+
+                    <div>
+
+                        <span>
+                            Meta
+                        </span>
+
+                        <strong>
+                            R$ 300.000
+                        </strong>
+
+                    </div>
+
+                    <div>
+
+                        <span>
+                            Atingimento
+                        </span>
+
+                        <strong class="text-success">
+                            94,8%
+                        </strong>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- STATUS DOS PEDIDOS -->
+        <div class="col-12 col-xl-4">
+
+            <div class="erp-panel h-100">
+
+                <div class="panel-header">
+
+                    <div>
+                        <h5>
+                            Status dos pedidos
+                        </h5>
+
+                        <span>
+                            Distribuição atual
+                        </span>
+                    </div>
+
+                </div>
+
+
+                <div class="orders-overview">
+
+                    <div class="orders-circle">
+
+                        <div class="circle-inner">
+
+                            <strong>
+                                1.284
+                            </strong>
+
+                            <span>
+                                pedidos
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="order-legend">
+
+                        <div class="legend-item">
+
+                            <span class="legend-label">
+                                <i class="legend-dot blue"></i>
+                                Aprovados
+                            </span>
+
+                            <strong>
+                                782
+                            </strong>
+
+                        </div>
+
+
+                        <div class="legend-item">
+
+                            <span class="legend-label">
+                                <i class="legend-dot green"></i>
+                                Faturados
+                            </span>
+
+                            <strong>
+                                342
+                            </strong>
+
+                        </div>
+
+
+                        <div class="legend-item">
+
+                            <span class="legend-label">
+                                <i class="legend-dot orange"></i>
+                                Pendentes
+                            </span>
+
+                            <strong>
+                                103
+                            </strong>
+
+                        </div>
+
+
+                        <div class="legend-item">
+
+                            <span class="legend-label">
+                                <i class="legend-dot red"></i>
+                                Cancelados
+                            </span>
+
+                            <strong>
+                                57
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="orders-total">
+
+                    <div>
+
+                        <span>
+                            Ticket médio
+                        </span>
+
+                        <strong>
+                            R$ 1.842
+                        </strong>
+
+                    </div>
+
+                    <div class="ticket-growth">
+                        <i class="bi bi-arrow-up"></i>
+                        6,3%
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- IA + ATIVIDADES -->
+    <div class="row g-4 mt-1">
+
+        <!-- IA -->
+        <div class="col-12 col-xl-5">
+
+            <div class="erp-panel ai-panel">
+
+                <div class="ai-panel-header">
+
+                    <div class="ai-heading">
+
+                        <div class="ai-logo">
+                            <i class="bi bi-stars"></i>
+                        </div>
+
+                        <div>
+
+                            <h5>
+                                Inteligência Artificial
+                            </h5>
+
+                            <span>
+                                Insights operacionais
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                    <div class="ai-status-badge">
+
+                        <span></span>
+
+                        IA Online
+
+                    </div>
+
+                </div>
+
+
+                <!-- INSIGHT -->
+                <div class="ai-alert">
+
+                    <div class="ai-alert-icon orange">
+                        <i class="bi bi-percent"></i>
+                    </div>
+
+                    <div class="ai-alert-content">
+
+                        <div class="ai-alert-title">
+
+                            Descontos fora da política
+
+                            <span class="priority high">
+                                Alta
+                            </span>
+
+                        </div>
+
+                        <p>
+                            8 pedidos possuem descontos superiores
+                            ao limite definido para seus contratos.
+                        </p>
+
+                        <button>
+                            Ver pedidos
+                            <i class="bi bi-arrow-right"></i>
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <!-- INSIGHT -->
+                <div class="ai-alert">
+
+                    <div class="ai-alert-icon red">
+                        <i class="bi bi-receipt"></i>
+                    </div>
+
+                    <div class="ai-alert-content">
+
+                        <div class="ai-alert-title">
+
+                            Divergências fiscais
+
+                            <span class="priority critical">
+                                Crítico
+                            </span>
+
+                        </div>
+
+                        <p>
+                            3 notas fiscais apresentam divergências
+                            tributárias identificadas pela IA.
+                        </p>
+
+                        <button>
+                            Ver notas
+                            <i class="bi bi-arrow-right"></i>
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <!-- INSIGHT -->
+                <div class="ai-alert">
+
+                    <div class="ai-alert-icon green">
+                        <i class="bi bi-graph-up-arrow"></i>
+                    </div>
+
+                    <div class="ai-alert-content">
+
+                        <div class="ai-alert-title">
+
+                            Oportunidade comercial
+
+                            <span class="priority normal">
+                                Oportunidade
+                            </span>
+
+                        </div>
+
+                        <p>
+                            12 clientes apresentam alta probabilidade
+                            de recompra nos próximos 15 dias.
+                        </p>
+
+                        <button>
+                            Ver clientes
+                            <i class="bi bi-arrow-right"></i>
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <button class="btn btn-primary w-100 mt-2">
+
+                    <i class="bi bi-stars me-2"></i>
+
+                    Abrir central de inteligência
+
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <!-- ATIVIDADES -->
+        <div class="col-12 col-xl-7">
+
+            <div class="erp-panel">
+
+                <div class="panel-header">
+
+                    <div>
+
+                        <h5>
+                            Atividades recentes
+                        </h5>
+
+                        <span>
+                            Últimas movimentações
+                        </span>
+
+                    </div>
+
+                    <button class="btn btn-sm btn-light border">
+                        Ver todas
+                    </button>
+
+                </div>
+
+
+                <div class="activity-list">
+
+                    <div class="activity-row">
+
+                        <div class="activity-avatar blue">
+                            <i class="bi bi-cart-check"></i>
+                        </div>
+
+                        <div class="activity-description">
+
+                            <strong>
+                                Pedido #10254 aprovado
+                            </strong>
+
+                            <span>
+                                Empresa ABC Ltda.
+                            </span>
+
+                        </div>
+
+                        <div class="activity-time">
+                            09:32
+                        </div>
+
+                    </div>
+
+
+                    <div class="activity-row">
+
+                        <div class="activity-avatar purple">
+                            <i class="bi bi-stars"></i>
+                        </div>
+
+                        <div class="activity-description">
+
+                            <strong>
+                                Análise IA concluída
+                            </strong>
+
+                            <span>
+                                Pedido #10248
+                            </span>
+
+                        </div>
+
+                        <div class="activity-time">
+                            09:15
+                        </div>
+
+                    </div>
+
+
+                    <div class="activity-row">
+
+                        <div class="activity-avatar green">
+                            <i class="bi bi-receipt"></i>
+                        </div>
+
+                        <div class="activity-description">
+
+                            <strong>
+                                NF-e #45231 importada
+                            </strong>
+
+                            <span>
+                                ACME Industrial
+                            </span>
+
+                        </div>
+
+                        <div class="activity-time">
+                            08:54
+                        </div>
+
+                    </div>
+
+
+                    <div class="activity-row">
+
+                        <div class="activity-avatar orange">
+                            <i class="bi bi-cash-stack"></i>
+                        </div>
+
+                        <div class="activity-description">
+
+                            <strong>
+                                Pagamento recebido
+                            </strong>
+
+                            <span>
+                                R$ 18.500,00
+                            </span>
+
+                        </div>
+
+                        <div class="activity-time">
+                            08:37
+                        </div>
+
+                    </div>
+
+
+                    <div class="activity-row">
+
+                        <div class="activity-avatar red">
+                            <i class="bi bi-exclamation-circle"></i>
+                        </div>
+
+                        <div class="activity-description">
+
+                            <strong>
+                                Cliente em atraso
+                            </strong>
+
+                            <span>
+                                Empresa XYZ Ltda.
+                            </span>
+
+                        </div>
+
+                        <div class="activity-time">
+                            08:21
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- RESUMO INFERIOR -->
+    <div class="row g-4 mt-1">
+
+        <div class="col-12 col-md-4">
+
+            <div class="mini-dashboard-card">
+
+                <div class="mini-icon blue">
+                    <i class="bi bi-truck"></i>
+                </div>
+
+                <div>
+
+                    <span>
+                        Fornecedores ativos
+                    </span>
+
+                    <strong>
+                        186
+                    </strong>
+
+                </div>
+
+                <i class="bi bi-arrow-up-right mini-arrow"></i>
+
+            </div>
+
+        </div>
+
+
+        <div class="col-12 col-md-4">
+
+            <div class="mini-dashboard-card">
+
+                <div class="mini-icon purple">
+                    <i class="bi bi-file-earmark-text"></i>
+                </div>
+
+                <div>
+
+                    <span>
+                        Documentos indexados
+                    </span>
+
+                    <strong>
+                        12.842
+                    </strong>
+
+                </div>
+
+                <i class="bi bi-arrow-up-right mini-arrow"></i>
+
+            </div>
+
+        </div>
+
+
+        <div class="col-12 col-md-4">
+
+            <div class="mini-dashboard-card">
+
+                <div class="mini-icon green">
+                    <i class="bi bi-check2-circle"></i>
+                </div>
+
+                <div>
+
+                    <span>
+                        Processos automatizados
+                    </span>
+
+                    <strong>
+                        94,2%
+                    </strong>
+
+                </div>
+
+                <i class="bi bi-arrow-up-right mini-arrow"></i>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

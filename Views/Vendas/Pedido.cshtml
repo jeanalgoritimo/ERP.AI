@@ -1,0 +1,1695 @@
+﻿@{
+    ViewData["Title"] = "Pedido de Venda";
+}
+
+<div class="sales-order-page">
+
+    <!-- =========================================================
+         CABEÇALHO
+         ========================================================= -->
+
+    <div class="page-header">
+
+        <div>
+
+            <div class="page-breadcrumb">
+
+                <span>ERP AI</span>
+
+                <i class="bi bi-chevron-right"></i>
+
+                <span>Comercial</span>
+
+                <i class="bi bi-chevron-right"></i>
+
+                <strong>Pedido de Venda</strong>
+
+            </div>
+
+            <div class="page-title-wrapper">
+
+                <div>
+
+                    <h1 class="page-title">
+                        Pedido de Venda
+                    </h1>
+
+                    <p class="page-subtitle">
+                        Crie, analise e valide um novo pedido comercial.
+                    </p>
+
+                </div>
+
+                <div class="order-status">
+
+                    <span class="status-dot"></span>
+
+                    Rascunho
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="page-actions">
+
+            <a asp-controller="Home"
+               asp-action="Index"
+               class="btn btn-light border">
+
+                <i class="bi bi-arrow-left me-2"></i>
+
+                Voltar
+
+            </a>
+
+            <button type="button"
+                    class="btn btn-light border"
+                    onclick="salvarRascunho()">
+
+                <i class="bi bi-save me-2"></i>
+
+                Salvar rascunho
+
+            </button>
+
+            <button type="button"
+                    class="btn btn-primary"
+                    onclick="finalizarPedido()">
+
+                <i class="bi bi-check-lg me-2"></i>
+
+                Finalizar pedido
+
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================================================
+         IDENTIFICAÇÃO
+         ========================================================= -->
+
+    <div class="erp-section-card">
+
+        <div class="section-header">
+
+            <div class="section-icon blue">
+
+                <i class="bi bi-file-earmark-text"></i>
+
+            </div>
+
+            <div>
+
+                <h5>
+                    Identificação do pedido
+                </h5>
+
+                <span>
+                    Informações básicas da venda
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <div class="row g-3">
+
+            <div class="col-lg-2">
+
+                <label class="form-label">
+                    Número
+                </label>
+
+                <input type="text"
+                       class="form-control"
+                       value="NOVO"
+                       readonly />
+
+            </div>
+
+
+            <div class="col-lg-2">
+
+                <label class="form-label required">
+                    Data
+                </label>
+
+                <input type="date"
+                       class="form-control"
+                       value="@DateTime.Now.ToString("yyyy-MM-dd")" />
+
+            </div>
+
+
+            <div class="col-lg-4">
+
+                <label class="form-label required">
+                    Vendedor
+                </label>
+
+                <select class="form-select">
+
+                    <option value="">
+                        Selecione
+                    </option>
+
+                    <option selected>
+                        João da Silva
+                    </option>
+
+                    <option>
+                        Maria Santos
+                    </option>
+
+                    <option>
+                        Carlos Oliveira
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <div class="col-lg-4">
+
+                <label class="form-label required">
+                    Filial
+                </label>
+
+                <select class="form-select">
+
+                    <option selected>
+                        Matriz - MG
+                    </option>
+
+                    <option>
+                        Filial - SP
+                    </option>
+
+                    <option>
+                        Filial - RJ
+                    </option>
+
+                </select>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================================================
+         CLIENTE
+         ========================================================= -->
+
+    <div class="erp-section-card">
+
+        <div class="section-header">
+
+            <div class="section-icon purple">
+
+                <i class="bi bi-person"></i>
+
+            </div>
+
+            <div>
+
+                <h5>
+                    Dados do cliente
+                </h5>
+
+                <span>
+                    Informações comerciais do cliente
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <div class="row g-3">
+
+            <!-- CLIENTE -->
+
+            <div class="col-lg-6">
+
+                <label class="form-label required">
+                    Cliente
+                </label>
+
+                <div class="input-group">
+
+                    <select id="cliente"
+                            class="form-select"
+                            onchange="carregarCliente()">
+
+                        <option value="">
+                            Selecione o cliente
+                        </option>
+
+                        <option value="1">
+                            Empresa ABC Ltda.
+                        </option>
+
+                        <option value="2">
+                            Empresa XYZ Ltda.
+                        </option>
+
+                        <option value="3">
+                            Comércio Industrial MG
+                        </option>
+
+                    </select>
+
+                    <button class="btn btn-outline-secondary"
+                            type="button"
+                            onclick="pesquisarCliente()">
+
+                        <i class="bi bi-search"></i>
+
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <!-- CNPJ -->
+
+            <div class="col-lg-3">
+
+                <label class="form-label">
+                    CNPJ
+                </label>
+
+                <input id="clienteCnpj"
+                       type="text"
+                       class="form-control"
+                       value=""
+                       readonly />
+
+            </div>
+
+
+            <!-- SEGMENTO -->
+
+            <div class="col-lg-3">
+
+                <label class="form-label">
+                    Segmento
+                </label>
+
+                <input id="clienteSegmento"
+                       type="text"
+                       class="form-control"
+                       value=""
+                       readonly />
+
+            </div>
+
+
+            <!-- PAGAMENTO -->
+
+            <div class="col-lg-4">
+
+                <label class="form-label required">
+                    Condição de pagamento
+                </label>
+
+                <select class="form-select">
+
+                    <option>
+                        À vista
+                    </option>
+
+                    <option selected>
+                        30 dias
+                    </option>
+
+                    <option>
+                        30/60 dias
+                    </option>
+
+                    <option>
+                        30/60/90 dias
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <!-- TABELA -->
+
+            <div class="col-lg-4">
+
+                <label class="form-label required">
+                    Tabela de preço
+                </label>
+
+                <select class="form-select">
+
+                    <option selected>
+                        Tabela Corporativa 2026
+                    </option>
+
+                    <option>
+                        Tabela Varejo 2026
+                    </option>
+
+                    <option>
+                        Tabela Especial
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <!-- CANAL -->
+
+            <div class="col-lg-4">
+
+                <label class="form-label">
+                    Canal de venda
+                </label>
+
+                <select class="form-select">
+
+                    <option selected>
+                        Venda direta
+                    </option>
+
+                    <option>
+                        E-commerce
+                    </option>
+
+                    <option>
+                        Representante
+                    </option>
+
+                </select>
+
+            </div>
+
+        </div>
+
+
+        <!-- CONTEXTO DO CLIENTE -->
+
+        <div id="customerContext"
+             class="customer-context d-none">
+
+            <div class="customer-context-icon">
+
+                <i class="bi bi-building"></i>
+
+            </div>
+
+            <div>
+
+                <strong>
+                    Contexto comercial do cliente
+                </strong>
+
+                <span id="customerContextText">
+                    Cliente ativo.
+                </span>
+
+            </div>
+
+            <div class="customer-context-status">
+
+                <i class="bi bi-check-circle-fill"></i>
+
+                Cliente regular
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================================================
+         ITENS
+         ========================================================= -->
+
+    <div class="erp-section-card">
+
+        <div class="section-header section-header-items">
+
+            <div class="section-header-left">
+
+                <div class="section-icon green">
+
+                    <i class="bi bi-box-seam"></i>
+
+                </div>
+
+                <div>
+
+                    <h5>
+                        Itens do pedido
+                    </h5>
+
+                    <span>
+                        Produtos e serviços comercializados
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <button type="button"
+                    class="btn btn-primary btn-sm"
+                    onclick="adicionarItem()">
+
+                <i class="bi bi-plus-lg me-1"></i>
+
+                Adicionar item
+
+            </button>
+
+        </div>
+
+
+        <div class="table-responsive">
+
+            <table class="table order-items-table">
+
+                <thead>
+
+                    <tr>
+
+                        <th width="30">
+                            #
+                        </th>
+
+                        <th>
+                            Produto
+                        </th>
+
+                        <th width="110">
+                            Quantidade
+                        </th>
+
+                        <th width="140">
+                            Preço unit.
+                        </th>
+
+                        <th width="130">
+                            Desconto
+                        </th>
+
+                        <th width="150">
+                            Total
+                        </th>
+
+                        <th width="50">
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody id="orderItems">
+
+                    <tr>
+
+                        <td>
+                            01
+                        </td>
+
+                        <td>
+
+                            <div class="product-cell">
+
+                                <div class="product-icon">
+
+                                    <i class="bi bi-box"></i>
+
+                                </div>
+
+                                <div>
+
+                                    <strong>
+                                        Notebook Pro 15
+                                    </strong>
+
+                                    <span>
+                                        SKU: NB-0015
+                                    </span>
+
+                                </div>
+
+                            </div>
+
+                        </td>
+
+
+                        <td>
+
+                            <input type="number"
+                                   class="form-control form-control-sm item-quantity"
+                                   value="10"
+                                   min="1"
+                                   onchange="calcularTotais()" />
+
+                        </td>
+
+
+                        <td>
+
+                            <input type="number"
+                                   class="form-control form-control-sm text-end item-price"
+                                   value="4500"
+                                   step="0.01"
+                                   onchange="calcularTotais()" />
+
+                        </td>
+
+
+                        <td>
+
+                            <div class="discount-input">
+
+                                <input type="number"
+                                       class="form-control form-control-sm item-discount"
+                                       value="15"
+                                       min="0"
+                                       max="100"
+                                       onchange="validarDesconto(this)" />
+
+                                <span>
+                                    %
+                                </span>
+
+                            </div>
+
+                        </td>
+
+
+                        <td>
+
+                            <strong class="item-total">
+                                R$ 38.250,00
+                            </strong>
+
+                        </td>
+
+
+                        <td>
+
+                            <button type="button"
+                                    class="table-action danger"
+                                    onclick="removerItem(this)">
+
+                                <i class="bi bi-trash"></i>
+
+                            </button>
+
+                        </td>
+
+                    </tr>
+
+
+                    <tr>
+
+                        <td>
+                            02
+                        </td>
+
+                        <td>
+
+                            <div class="product-cell">
+
+                                <div class="product-icon">
+
+                                    <i class="bi bi-display"></i>
+
+                                </div>
+
+                                <div>
+
+                                    <strong>
+                                        Monitor 27"
+                                    </strong>
+
+                                    <span>
+                                        SKU: MON-0027
+                                    </span>
+
+                                </div>
+
+                            </div>
+
+                        </td>
+
+
+                        <td>
+
+                            <input type="number"
+                                   class="form-control form-control-sm item-quantity"
+                                   value="5"
+                                   min="1"
+                                   onchange="calcularTotais()" />
+
+                        </td>
+
+
+                        <td>
+
+                            <input type="number"
+                                   class="form-control form-control-sm text-end item-price"
+                                   value="1800"
+                                   step="0.01"
+                                   onchange="calcularTotais()" />
+
+                        </td>
+
+
+                        <td>
+
+                            <div class="discount-input">
+
+                                <input type="number"
+                                       class="form-control form-control-sm item-discount"
+                                       value="5"
+                                       min="0"
+                                       max="100"
+                                       onchange="validarDesconto(this)" />
+
+                                <span>
+                                    %
+                                </span>
+
+                            </div>
+
+                        </td>
+
+
+                        <td>
+
+                            <strong class="item-total">
+                                R$ 8.550,00
+                            </strong>
+
+                        </td>
+
+
+                        <td>
+
+                            <button type="button"
+                                    class="table-action danger"
+                                    onclick="removerItem(this)">
+
+                                <i class="bi bi-trash"></i>
+
+                            </button>
+
+                        </td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+
+        <div class="add-item-area">
+
+            <button type="button"
+                    onclick="adicionarItem()">
+
+                <i class="bi bi-plus-circle me-1"></i>
+
+                Adicionar outro produto
+
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================================================
+         OBSERVAÇÕES + TOTAIS
+         ========================================================= -->
+
+    <div class="row g-4">
+
+
+        <!-- OBSERVAÇÕES -->
+
+        <div class="col-xl-7">
+
+            <div class="erp-section-card h-100">
+
+                <div class="section-header">
+
+                    <div class="section-icon gray">
+
+                        <i class="bi bi-chat-left-text"></i>
+
+                    </div>
+
+                    <div>
+
+                        <h5>
+                            Observações
+                        </h5>
+
+                        <span>
+                            Informações adicionais do pedido
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <textarea id="observacoes"
+                          class="form-control order-observation"
+                          rows="7"
+                          placeholder="Digite observações importantes sobre o pedido..."></textarea>
+
+
+                <div class="form-check mt-3">
+
+                    <input class="form-check-input"
+                           type="checkbox"
+                           id="sendEmail" />
+
+                    <label class="form-check-label"
+                           for="sendEmail">
+
+                        Enviar confirmação do pedido para o cliente
+
+                    </label>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- TOTAIS -->
+
+        <div class="col-xl-5">
+
+            <div class="erp-section-card totals-card">
+
+                <div class="section-header">
+
+                    <div class="section-icon blue">
+
+                        <i class="bi bi-calculator"></i>
+
+                    </div>
+
+                    <div>
+
+                        <h5>
+                            Resumo financeiro
+                        </h5>
+
+                        <span>
+                            Valores do pedido
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="totals-list">
+
+                    <div>
+
+                        <span>
+                            Subtotal
+                        </span>
+
+                        <strong id="subtotal">
+                            R$ 0,00
+                        </strong>
+
+                    </div>
+
+
+                    <div>
+
+                        <span>
+                            Desconto
+                        </span>
+
+                        <strong id="descontoTotal"
+                                class="discount-value">
+
+                            - R$ 0,00
+
+                        </strong>
+
+                    </div>
+
+
+                    <div>
+
+                        <span>
+                            Frete
+                        </span>
+
+                        <strong>
+                            R$ 850,00
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+                <div class="total-final">
+
+                    <span>
+                        Total do pedido
+                    </span>
+
+                    <strong id="totalPedido">
+                        R$ 0,00
+                    </strong>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================================================
+         INTELIGÊNCIA COMERCIAL / RAG
+         ========================================================= -->
+
+    <div class="ai-commercial-card">
+
+        <div class="ai-commercial-header">
+
+            <div class="ai-commercial-title">
+
+                <div class="ai-commercial-icon">
+
+                    <i class="bi bi-stars"></i>
+
+                </div>
+
+                <div>
+
+                    <h4>
+                        Inteligência Comercial
+                    </h4>
+
+                    <p>
+                        Análise contextual do pedido
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="ai-analysis-status">
+
+                <span></span>
+
+                Análise concluída
+
+            </div>
+
+        </div>
+
+
+        <div class="row g-4">
+
+
+            <!-- DESCONTO -->
+
+            <div class="col-xl-4">
+
+                <div class="ai-result-card warning-result">
+
+                    <div class="ai-result-header">
+
+                        <div class="ai-result-symbol">
+
+                            <i class="bi bi-exclamation-triangle"></i>
+
+                        </div>
+
+                        <span class="ai-result-badge">
+                            Atenção
+                        </span>
+
+                    </div>
+
+
+                    <h5>
+                        Desconto acima da política
+                    </h5>
+
+                    <p>
+                        O desconto informado de
+                        <strong>15%</strong>
+                        está acima do limite permitido
+                        para este cliente.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- CONTRATO -->
+
+            <div class="col-xl-4">
+
+                <div class="ai-result-card">
+
+                    <div class="ai-result-header">
+
+                        <div class="ai-result-symbol blue-symbol">
+
+                            <i class="bi bi-file-earmark-check"></i>
+
+                        </div>
+
+                        <span class="ai-result-badge blue-badge">
+                            Contrato
+                        </span>
+
+                    </div>
+
+
+                    <h5>
+                        Contrato comercial encontrado
+                    </h5>
+
+                    <p>
+                        Contrato
+                        <strong>#CTR-2026-0048</strong>
+                        estabelece limite de desconto
+                        de até <strong>10%</strong>.
+                    </p>
+
+                    <button type="button"
+                            class="ai-evidence-link">
+
+                        <i class="bi bi-file-text"></i>
+
+                        Ver contrato
+
+                        <i class="bi bi-arrow-right"></i>
+
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <!-- POLÍTICA -->
+
+            <div class="col-xl-4">
+
+                <div class="ai-result-card">
+
+                    <div class="ai-result-header">
+
+                        <div class="ai-result-symbol green-symbol">
+
+                            <i class="bi bi-shield-check"></i>
+
+                        </div>
+
+                        <span class="ai-result-badge green-badge">
+                            Política
+                        </span>
+
+                    </div>
+
+
+                    <h5>
+                        Política comercial aplicada
+                    </h5>
+
+                    <p>
+                        Política
+                        <strong>COM-2026</strong>
+                        define limite de desconto de
+                        10% para clientes corporativos.
+                    </p>
+
+                    <button type="button"
+                            class="ai-evidence-link">
+
+                        <i class="bi bi-search"></i>
+
+                        Ver evidências
+
+                        <i class="bi bi-arrow-right"></i>
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- RECOMENDAÇÃO -->
+
+        <div class="ai-recommendation">
+
+            <div class="recommendation-icon">
+
+                <i class="bi bi-lightbulb"></i>
+
+            </div>
+
+            <div class="recommendation-content">
+
+                <strong>
+                    Recomendação da IA
+                </strong>
+
+                <p>
+                    Reduza o desconto para até
+                    <strong>10%</strong>
+                    ou envie o pedido para aprovação
+                    do gerente comercial.
+                </p>
+
+            </div>
+
+            <button type="button"
+                    class="btn btn-outline-primary"
+                    onclick="solicitarAprovacao()">
+
+                Enviar para aprovação
+
+            </button>
+
+        </div>
+
+
+        <!-- EVIDÊNCIAS -->
+
+        <div class="ai-evidence">
+
+            <div class="evidence-header">
+
+                <span>
+
+                    <i class="bi bi-database me-1"></i>
+
+                    Evidências utilizadas na análise
+
+                </span>
+
+                <span class="evidence-count">
+                    3 documentos encontrados
+                </span>
+
+            </div>
+
+
+            <div class="evidence-list">
+
+
+                <div class="evidence-item">
+
+                    <div class="evidence-type">
+                        PDF
+                    </div>
+
+                    <div class="evidence-info">
+
+                        <strong>
+                            Política Comercial 2026
+                        </strong>
+
+                        <span>
+                            COM-2026 · Atualizado em 05/01/2026
+                        </span>
+
+                    </div>
+
+                    <button type="button">
+
+                        <i class="bi bi-box-arrow-up-right"></i>
+
+                    </button>
+
+                </div>
+
+
+                <div class="evidence-item">
+
+                    <div class="evidence-type">
+                        PDF
+                    </div>
+
+                    <div class="evidence-info">
+
+                        <strong>
+                            Contrato Comercial #CTR-2026-0048
+                        </strong>
+
+                        <span>
+                            Cliente: Empresa ABC Ltda.
+                        </span>
+
+                    </div>
+
+                    <button type="button">
+
+                        <i class="bi bi-box-arrow-up-right"></i>
+
+                    </button>
+
+                </div>
+
+
+                <div class="evidence-item">
+
+                    <div class="evidence-type">
+                        DOC
+                    </div>
+
+                    <div class="evidence-info">
+
+                        <strong>
+                            Manual de Regras de Desconto
+                        </strong>
+
+                        <span>
+                            Comercial · Versão 3.2
+                        </span>
+
+                    </div>
+
+                    <button type="button">
+
+                        <i class="bi bi-box-arrow-up-right"></i>
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+@section Scripts {
+
+    <script>
+
+        // =========================================================
+        // CLIENTE
+        // =========================================================
+
+        function carregarCliente() {
+
+            const cliente =
+                document.getElementById("cliente").value;
+
+            const context =
+                document.getElementById("customerContext");
+
+            if (!cliente) {
+
+                context.classList.add("d-none");
+
+                return;
+            }
+
+            context.classList.remove("d-none");
+
+            if (cliente === "1") {
+
+                document.getElementById("clienteCnpj").value =
+                    "12.345.678/0001-90";
+
+                document.getElementById("clienteSegmento").value =
+                    "Corporativo";
+
+                document.getElementById("customerContextText").innerText =
+                    "Cliente ativo há 5 anos · Limite de crédito: R$ 150.000 · Categoria: Ouro";
+
+            }
+
+            if (cliente === "2") {
+
+                document.getElementById("clienteCnpj").value =
+                    "98.765.432/0001-10";
+
+                document.getElementById("clienteSegmento").value =
+                    "Industrial";
+
+                document.getElementById("customerContextText").innerText =
+                    "Cliente ativo há 3 anos · Limite de crédito: R$ 80.000 · Categoria: Prata";
+
+            }
+
+            if (cliente === "3") {
+
+                document.getElementById("clienteCnpj").value =
+                    "45.321.678/0001-22";
+
+                document.getElementById("clienteSegmento").value =
+                    "Comercial";
+
+                document.getElementById("customerContextText").innerText =
+                    "Cliente ativo há 2 anos · Limite de crédito: R$ 50.000 · Categoria: Bronze";
+
+            }
+
+        }
+
+
+        // =========================================================
+        // PESQUISA CLIENTE
+        // =========================================================
+
+        function pesquisarCliente() {
+
+            alert("Pesquisa de clientes será implementada posteriormente.");
+
+        }
+
+
+        // =========================================================
+        // ADICIONAR ITEM
+        // =========================================================
+
+        function adicionarItem() {
+
+            const tbody =
+                document.getElementById("orderItems");
+
+            const rowCount =
+                tbody.rows.length + 1;
+
+            const row =
+                document.createElement("tr");
+
+            row.innerHTML = `
+
+                <td>
+                    ${String(rowCount).padStart(2, "0")}
+                </td>
+
+                <td>
+
+                    <div class="product-cell">
+
+                        <div class="product-icon">
+
+                            <i class="bi bi-box"></i>
+
+                        </div>
+
+                        <div>
+
+                            <strong>
+                                Novo produto
+                            </strong>
+
+                            <span>
+                                Clique para selecionar
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                </td>
+
+                <td>
+
+                    <input type="number"
+                           class="form-control form-control-sm item-quantity"
+                           value="1"
+                           min="1"
+                           onchange="calcularTotais()" />
+
+                </td>
+
+                <td>
+
+                    <input type="number"
+                           class="form-control form-control-sm text-end item-price"
+                           value="0"
+                           step="0.01"
+                           onchange="calcularTotais()" />
+
+                </td>
+
+                <td>
+
+                    <div class="discount-input">
+
+                        <input type="number"
+                               class="form-control form-control-sm item-discount"
+                               value="0"
+                               min="0"
+                               max="100"
+                               onchange="validarDesconto(this)" />
+
+                        <span>
+                            %
+                        </span>
+
+                    </div>
+
+                </td>
+
+                <td>
+
+                    <strong class="item-total">
+                        R$ 0,00
+                    </strong>
+
+                </td>
+
+                <td>
+
+                    <button type="button"
+                            class="table-action danger"
+                            onclick="removerItem(this)">
+
+                        <i class="bi bi-trash"></i>
+
+                    </button>
+
+                </td>
+
+            `;
+
+            tbody.appendChild(row);
+
+            atualizarNumeracao();
+
+        }
+
+
+        // =========================================================
+        // REMOVER ITEM
+        // =========================================================
+
+        function removerItem(button) {
+
+            const row =
+                button.closest("tr");
+
+            row.remove();
+
+            atualizarNumeracao();
+
+            calcularTotais();
+
+        }
+
+
+        // =========================================================
+        // NUMERAÇÃO
+        // =========================================================
+
+        function atualizarNumeracao() {
+
+            const rows =
+                document.querySelectorAll("#orderItems tr");
+
+            rows.forEach((row, index) => {
+
+                row.children[0].innerText =
+                    String(index + 1).padStart(2, "0");
+
+            });
+
+        }
+
+
+        // =========================================================
+        // DESCONTO
+        // =========================================================
+
+        function validarDesconto(input) {
+
+            let desconto =
+                parseFloat(input.value) || 0;
+
+            if (desconto < 0) {
+
+                desconto = 0;
+
+                input.value = 0;
+
+            }
+
+            if (desconto > 100) {
+
+                desconto = 100;
+
+                input.value = 100;
+
+            }
+
+            calcularTotais();
+
+            verificarRegraRag(desconto);
+
+        }
+
+
+        // =========================================================
+        // SIMULAÇÃO DA VALIDAÇÃO RAG
+        // =========================================================
+
+        function verificarRegraRag(desconto) {
+
+            const aiCard =
+                document.querySelector(".warning-result");
+
+            if (!aiCard)
+                return;
+
+            if (desconto > 10) {
+
+                aiCard.style.display = "block";
+
+            } else {
+
+                aiCard.style.display = "block";
+
+            }
+
+            /*
+                FUTURO:
+
+                fetch('/api/ia/validar-desconto', {
+                    method: 'POST',
+                    body: JSON.stringify(...)
+                })
+
+                API
+                  ↓
+                RAG
+                  ↓
+                Qdrant
+                  ↓
+                LLM
+                  ↓
+                Resposta
+            */
+
+        }
+
+
+        // =========================================================
+        // CALCULAR TOTAIS
+        // =========================================================
+
+        function calcularTotais() {
+
+            const rows =
+                document.querySelectorAll("#orderItems tr");
+
+            let subtotal = 0;
+
+            let descontoTotal = 0;
+
+            rows.forEach(row => {
+
+                const quantidade =
+                    parseFloat(
+                        row.querySelector(".item-quantity")?.value
+                    ) || 0;
+
+                const preco =
+                    parseFloat(
+                        row.querySelector(".item-price")?.value
+                    ) || 0;
+
+                const desconto =
+                    parseFloat(
+                        row.querySelector(".item-discount")?.value
+                    ) || 0;
+
+                const valorBruto =
+                    quantidade * preco;
+
+                const valorDesconto =
+                    valorBruto * (desconto / 100);
+
+                const valorFinal =
+                    valorBruto - valorDesconto;
+
+                subtotal += valorBruto;
+
+                descontoTotal += valorDesconto;
+
+                const totalElement =
+                    row.querySelector(".item-total");
+
+                if (totalElement) {
+
+                    totalElement.innerText =
+                        formatarMoeda(valorFinal);
+
+                }
+
+            });
+
+
+            const frete = 850;
+
+            const total =
+                subtotal -
+                descontoTotal +
+                frete;
+
+
+            document.getElementById("subtotal").innerText =
+                formatarMoeda(subtotal);
+
+
+            document.getElementById("descontoTotal").innerText =
+                "- " + formatarMoeda(descontoTotal);
+
+
+            document.getElementById("totalPedido").innerText =
+                formatarMoeda(total);
+
+        }
+
+
+        // =========================================================
+        // MOEDA
+        // =========================================================
+
+        function formatarMoeda(valor) {
+
+            return valor.toLocaleString(
+                "pt-BR",
+                {
+                    style: "currency",
+                    currency: "BRL"
+                }
+            );
+
+        }
+
+
+        // =========================================================
+        // SALVAR
+        // =========================================================
+
+        function salvarRascunho() {
+
+            alert("Pedido salvo como rascunho.");
+
+        }
+
+
+        // =========================================================
+        // FINALIZAR
+        // =========================================================
+
+        function finalizarPedido() {
+
+            const cliente =
+                document.getElementById("cliente").value;
+
+            if (!cliente) {
+
+                alert("Selecione um cliente antes de finalizar.");
+
+                return;
+
+            }
+
+            alert("Pedido pronto para processamento.");
+
+        }
+
+
+        // =========================================================
+        // APROVAÇÃO
+        // =========================================================
+
+        function solicitarAprovacao() {
+
+            alert(
+                "Solicitação de aprovação enviada para o gerente comercial."
+            );
+
+        }
+
+
+        // =========================================================
+        // INICIALIZAÇÃO
+        // =========================================================
+
+        document.addEventListener(
+            "DOMContentLoaded",
+            function () {
+
+                calcularTotais();
+
+            }
+        );
+
+    </script>
+
+}
