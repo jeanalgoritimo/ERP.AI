@@ -1,0 +1,7 @@
+@{ ViewData["Title"] = "Página não encontrada"; var code = ViewData["StatusCode"]; }
+<div class="erp-card text-center py-5">
+    <div class="display-3 fw-bold text-primary">@code</div>
+    <h1 class="h4 mt-3">Não foi possível abrir esta página</h1>
+    <p class="text-secondary">Confira o endereço ou retorne ao dashboard.</p>
+    <a asp-controller="Home" asp-action="Index" class="btn btn-primary">Voltar ao dashboard</a>
+</div>

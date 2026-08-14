@@ -1,7 +1,15 @@
+using ERP.AI.Data;
+using ERP.AI.Services;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddDbContext<AppDbContext>(options =>
+    options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
+builder.Services.AddScoped<IClienteService, ClienteService>();
+builder.Services.AddScoped<IRagService, DemoRagService>();
 
 var app = builder.Build();
 
@@ -16,6 +24,7 @@ if (!app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseRouting();
 
+app.UseStatusCodePagesWithReExecute("/Home/StatusCode", "?code={0}");
 app.UseAuthorization();
 
 app.MapStaticAssets();
@@ -25,5 +34,8 @@ app.MapControllerRoute(
     pattern: "{controller=Home}/{action=Index}/{id?}")
     .WithStaticAssets();
 
+await DbInitializer.InitializeAsync(app.Services);
 
 app.Run();
+
+public partial class Program;

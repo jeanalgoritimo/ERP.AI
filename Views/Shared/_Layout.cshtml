@@ -17,6 +17,8 @@
 
     <!-- CSS da aplicação -->
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+
+    @await RenderSectionAsync("Styles", required: false)
 </head>
 
 <body>

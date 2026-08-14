@@ -361,3 +361,10 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+
+# ERP.AI local persistence and secrets
+*.db
+*.db-shm
+*.db-wal
+.env
+appsettings.Local.json

@@ -22,6 +22,12 @@ public class HomeController : Controller
     {
         return View();
     }
+    public IActionResult StatusCode(int code)
+    {
+        Response.StatusCode = code;
+        ViewData["StatusCode"] = code;
+        return View();
+    }
     public IActionResult Pedido()
     {
         return View("~/Views/Vendas/Pedido.cshtml");

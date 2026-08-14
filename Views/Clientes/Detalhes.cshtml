@@ -1,0 +1,13 @@
+@model ERP.AI.Models.Clientes.ClienteFormViewModel
+@{ ViewData["Title"] = "Detalhes do cliente"; }
+<div class="page-header"><div><h1 class="page-title">@Model.RazaoSocial</h1><p class="page-subtitle">@Model.Codigo · @Model.NomeFantasia</p></div><a asp-action="Editar" asp-route-id="@Model.Id" class="btn btn-primary"><i class="bi bi-pencil me-1"></i>Editar</a></div>
+<div class="erp-card"><div class="row g-4">
+    <div class="col-md-4"><span class="text-secondary small">CPF/CNPJ</span><strong class="d-block">@Model.Documento</strong></div>
+    <div class="col-md-4"><span class="text-secondary small">E-MAIL</span><strong class="d-block">@(Model.Email.Length > 0 ? Model.Email : "Não informado")</strong></div>
+    <div class="col-md-4"><span class="text-secondary small">TELEFONE</span><strong class="d-block">@(Model.Telefone.Length > 0 ? Model.Telefone : "Não informado")</strong></div>
+    <div class="col-md-4"><span class="text-secondary small">LOCALIZAÇÃO</span><strong class="d-block">@Model.Cidade/@Model.Estado</strong></div>
+    <div class="col-md-4"><span class="text-secondary small">CATEGORIA</span><strong class="d-block">@Model.Categoria</strong></div>
+    <div class="col-md-4"><span class="text-secondary small">LIMITE DE CRÉDITO</span><strong class="d-block">@Model.LimiteCredito.ToString("C")</strong></div>
+</div></div>
+<div class="d-flex justify-content-between"><a asp-action="Index" class="btn btn-light border"><i class="bi bi-arrow-left me-1"></i>Voltar</a>
+<form asp-action="Excluir" asp-route-id="@Model.Id" method="post" onsubmit="return confirm('Excluir este cliente?');"><button class="btn btn-outline-danger"><i class="bi bi-trash me-1"></i>Excluir cliente</button></form></div>
