@@ -1,0 +1,2967 @@
+﻿@{
+    ViewData["Title"] = "Lançamento de Nota Fiscal";
+}
+
+<style>
+
+    /* =====================================================
+       PÁGINA
+       ===================================================== */
+
+    .fiscal-page {
+        padding: 24px;
+    }
+
+    .page-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+        gap: 20px;
+        margin-bottom: 24px;
+    }
+
+    .page-breadcrumb {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 13px;
+        color: #6c757d;
+        margin-bottom: 8px;
+    }
+
+    .page-breadcrumb i {
+        font-size: 10px;
+    }
+
+    .page-title {
+        margin: 0;
+        font-size: 28px;
+        font-weight: 700;
+        color: #1f2937;
+    }
+
+    .page-subtitle {
+        margin: 6px 0 0;
+        color: #6b7280;
+    }
+
+    .page-actions {
+        display: flex;
+        gap: 8px;
+    }
+
+    .order-status {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        margin-top: 14px;
+        padding: 7px 12px;
+        border-radius: 20px;
+        background: #eef4ff;
+        color: #2563eb;
+        font-size: 13px;
+        font-weight: 600;
+    }
+
+    .status-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: #2563eb;
+    }
+
+
+    /* =====================================================
+       CARDS
+       ===================================================== */
+
+    .erp-section-card {
+        background: #fff;
+        border: 1px solid #e5e7eb;
+        border-radius: 14px;
+        padding: 22px;
+        margin-bottom: 20px;
+        box-shadow: 0 2px 8px rgba(0,0,0,.03);
+    }
+
+    .section-header {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 22px;
+    }
+
+    .section-header h5 {
+        margin: 0;
+        font-size: 16px;
+        font-weight: 700;
+        color: #1f2937;
+    }
+
+    .section-header span {
+        display: block;
+        margin-top: 3px;
+        color: #6b7280;
+        font-size: 13px;
+    }
+
+    .section-icon {
+        width: 42px;
+        height: 42px;
+        border-radius: 11px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 19px;
+    }
+
+    .section-icon.blue {
+        background: #eaf2ff;
+        color: #2563eb;
+    }
+
+    .section-icon.purple {
+        background: #f1eaff;
+        color: #7c3aed;
+    }
+
+    .section-icon.orange {
+        background: #fff1df;
+        color: #ea580c;
+    }
+
+    .section-icon.green {
+        background: #e8f8ef;
+        color: #16a34a;
+    }
+
+    .section-icon.gray {
+        background: #f1f3f5;
+        color: #495057;
+    }
+
+
+    /* =====================================================
+       FORMULÁRIOS
+       ===================================================== */
+
+    .form-label {
+        font-size: 13px;
+        font-weight: 600;
+        color: #374151;
+        margin-bottom: 6px;
+    }
+
+    .form-label.required::after {
+        content: " *";
+        color: #dc3545;
+    }
+
+    .form-control,
+    .form-select {
+        min-height: 40px;
+        border-radius: 8px;
+        border-color: #d9dee5;
+    }
+
+    .form-control:focus,
+    .form-select:focus {
+        border-color: #86b7fe;
+        box-shadow: 0 0 0 .2rem rgba(13,110,253,.1);
+    }
+
+
+    /* =====================================================
+       XML UPLOAD
+       ===================================================== */
+
+    .xml-upload-area {
+        border: 2px dashed #cbd5e1;
+        border-radius: 14px;
+        padding: 30px;
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        cursor: pointer;
+        transition: .2s;
+        background: #fafcff;
+    }
+
+    .xml-upload-area:hover,
+    .xml-upload-area.drag-over {
+        border-color: #2563eb;
+        background: #f4f8ff;
+    }
+
+    .xml-upload-icon {
+        width: 58px;
+        height: 58px;
+        border-radius: 14px;
+        background: #eaf2ff;
+        color: #2563eb;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 27px;
+        flex-shrink: 0;
+    }
+
+    .xml-upload-area strong {
+        display: block;
+        color: #1f2937;
+        font-size: 15px;
+    }
+
+    .xml-upload-area span {
+        display: block;
+        color: #6b7280;
+        font-size: 13px;
+        margin-top: 3px;
+    }
+
+    .xml-upload-area .btn {
+        margin-left: auto;
+    }
+
+    .xml-loaded {
+        margin-top: 15px;
+        padding: 14px 16px;
+        border: 1px solid #bbf7d0;
+        background: #f0fdf4;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .xml-file-icon {
+        width: 42px;
+        height: 42px;
+        border-radius: 9px;
+        background: #dcfce7;
+        color: #16a34a;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 20px;
+    }
+
+    .xml-file-info {
+        flex: 1;
+    }
+
+    .xml-file-info strong {
+        display: block;
+        font-size: 14px;
+        color: #166534;
+    }
+
+    .xml-file-info span {
+        font-size: 12px;
+        color: #4b5563;
+    }
+
+    .xml-file-status {
+        color: #16a34a;
+        font-size: 13px;
+        font-weight: 600;
+    }
+
+
+    /* =====================================================
+       PRODUTOS
+       ===================================================== */
+
+    .section-header-items {
+        justify-content: space-between;
+    }
+
+    .section-header-left {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .fiscal-items-table {
+        margin-bottom: 0;
+        vertical-align: middle;
+    }
+
+    .fiscal-items-table th {
+        background: #f8fafc;
+        color: #6b7280;
+        font-size: 12px;
+        font-weight: 700;
+        text-transform: uppercase;
+        white-space: nowrap;
+    }
+
+    .fiscal-items-table td {
+        padding: 12px 8px;
+    }
+
+    .product-cell {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        min-width: 220px;
+    }
+
+    .product-icon {
+        width: 36px;
+        height: 36px;
+        border-radius: 8px;
+        background: #eef4ff;
+        color: #2563eb;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+    }
+
+    .product-cell strong {
+        display: block;
+        font-size: 13px;
+        color: #1f2937;
+    }
+
+    .product-cell span {
+        display: block;
+        font-size: 11px;
+        color: #6b7280;
+        margin-top: 2px;
+    }
+
+    .tax-value-warning {
+        display: flex;
+        align-items: center;
+        gap: 7px;
+        color: #dc3545;
+    }
+
+    .table-action {
+        width: 34px;
+        height: 34px;
+        border: 0;
+        border-radius: 7px;
+        background: #fff1f2;
+        color: #dc3545;
+    }
+
+    .fiscal-status {
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        padding: 5px 9px;
+        border-radius: 20px;
+        font-size: 11px;
+        font-weight: 600;
+        white-space: nowrap;
+        background: #f3f4f6;
+        color: #6b7280;
+    }
+
+    .fiscal-status.success {
+        background: #ecfdf3;
+        color: #15803d;
+    }
+
+    .fiscal-status.warning {
+        background: #fff7ed;
+        color: #c2410c;
+    }
+
+
+    /* =====================================================
+       TOTAIS
+       ===================================================== */
+
+    .totals-list > div {
+        display: flex;
+        justify-content: space-between;
+        padding: 9px 0;
+        border-bottom: 1px solid #f1f3f5;
+        font-size: 14px;
+    }
+
+    .totals-list span {
+        color: #6b7280;
+    }
+
+    .totals-list strong {
+        color: #374151;
+    }
+
+    .total-final {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 18px;
+        padding-top: 18px;
+        border-top: 2px solid #e5e7eb;
+    }
+
+    .total-final span {
+        font-weight: 600;
+        color: #374151;
+    }
+
+    .total-final strong {
+        font-size: 24px;
+        color: #2563eb;
+    }
+
+
+    /* =====================================================
+       INTELIGÊNCIA FISCAL
+       ===================================================== */
+
+    .ai-commercial-card {
+        background: linear-gradient(
+            135deg,
+            #f8fbff 0%,
+            #ffffff 100%
+        );
+        border: 1px solid #cfe0ff;
+        border-radius: 16px;
+        padding: 24px;
+        margin-top: 20px;
+        margin-bottom: 30px;
+    }
+
+    .ai-commercial-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 15px;
+        margin-bottom: 20px;
+    }
+
+    .ai-commercial-title {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .ai-commercial-icon {
+        width: 45px;
+        height: 45px;
+        border-radius: 12px;
+        background: #eaf2ff;
+        color: #2563eb;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 21px;
+    }
+
+    .ai-commercial-title h4 {
+        margin: 0;
+        font-size: 18px;
+        font-weight: 700;
+    }
+
+    .ai-commercial-title p {
+        margin: 3px 0 0;
+        color: #6b7280;
+        font-size: 13px;
+    }
+
+    .ai-analysis-status {
+        display: flex;
+        align-items: center;
+        gap: 7px;
+        color: #15803d;
+        font-size: 12px;
+        font-weight: 600;
+    }
+
+    .ai-analysis-status span {
+        width: 8px;
+        height: 8px;
+        background: #22c55e;
+        border-radius: 50%;
+    }
+
+    .fiscal-ai-alert {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        padding: 18px;
+        border-radius: 12px;
+        border: 1px solid #fed7aa;
+        background: #fff7ed;
+    }
+
+    .fiscal-ai-alert-icon {
+        width: 44px;
+        height: 44px;
+        border-radius: 10px;
+        background: #ffedd5;
+        color: #ea580c;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 20px;
+        flex-shrink: 0;
+    }
+
+    .fiscal-ai-alert-content {
+        flex: 1;
+    }
+
+    .fiscal-alert-title {
+        font-weight: 700;
+        color: #9a3412;
+        margin-bottom: 4px;
+    }
+
+    .fiscal-ai-alert-content p {
+        margin: 0;
+        color: #7c2d12;
+        font-size: 13px;
+        line-height: 1.6;
+    }
+
+    .fiscal-alert-badge {
+        padding: 6px 10px;
+        border-radius: 20px;
+        background: #dc2626;
+        color: white;
+        font-size: 11px;
+        font-weight: 700;
+        white-space: nowrap;
+    }
+
+    .ai-result-card {
+        height: 100%;
+        background: white;
+        border: 1px solid #e5e7eb;
+        border-radius: 12px;
+        padding: 18px;
+    }
+
+    .warning-result {
+        border-color: #fed7aa;
+    }
+
+    .ai-result-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 14px;
+    }
+
+    .ai-result-symbol {
+        width: 38px;
+        height: 38px;
+        border-radius: 9px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #fff7ed;
+        color: #ea580c;
+    }
+
+    .blue-symbol {
+        background: #eff6ff;
+        color: #2563eb;
+    }
+
+    .green-symbol {
+        background: #ecfdf5;
+        color: #16a34a;
+    }
+
+    .ai-result-badge {
+        font-size: 10px;
+        padding: 5px 8px;
+        border-radius: 15px;
+        background: #fef3c7;
+        color: #92400e;
+        font-weight: 700;
+    }
+
+    .blue-badge {
+        background: #eff6ff;
+        color: #2563eb;
+    }
+
+    .green-badge {
+        background: #ecfdf5;
+        color: #15803d;
+    }
+
+    .ai-result-card h5 {
+        font-size: 14px;
+        font-weight: 700;
+        margin-bottom: 10px;
+    }
+
+    .ai-result-card p {
+        color: #6b7280;
+        font-size: 13px;
+        line-height: 1.6;
+        margin: 0;
+    }
+
+    .tax-comparison strong {
+        display: block;
+        font-size: 27px;
+        color: #dc3545;
+    }
+
+    .tax-comparison span {
+        color: #6b7280;
+        font-size: 12px;
+    }
+
+    .ai-evidence-link {
+        margin-top: 12px;
+        border: 0;
+        background: transparent;
+        padding: 0;
+        color: #2563eb;
+        font-size: 12px;
+        font-weight: 600;
+    }
+
+    .ai-recommendation {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        margin-top: 18px;
+        padding: 16px;
+        border-radius: 11px;
+        background: #eff6ff;
+        border: 1px solid #dbeafe;
+    }
+
+    .recommendation-icon {
+        width: 40px;
+        height: 40px;
+        border-radius: 9px;
+        background: #dbeafe;
+        color: #2563eb;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+    }
+
+    .recommendation-content {
+        flex: 1;
+    }
+
+    .recommendation-content strong {
+        display: block;
+        font-size: 13px;
+        color: #1e40af;
+    }
+
+    .recommendation-content p {
+        margin: 4px 0 0;
+        color: #475569;
+        font-size: 12px;
+        line-height: 1.6;
+    }
+
+
+    /* =====================================================
+       EVIDÊNCIAS
+       ===================================================== */
+
+    .ai-evidence {
+        margin-top: 18px;
+        background: white;
+        border: 1px solid #e5e7eb;
+        border-radius: 11px;
+        overflow: hidden;
+    }
+
+    .evidence-header {
+        display: flex;
+        justify-content: space-between;
+        padding: 13px 15px;
+        border-bottom: 1px solid #e5e7eb;
+        font-size: 12px;
+        font-weight: 600;
+    }
+
+    .evidence-count {
+        color: #6b7280;
+        font-weight: 400;
+    }
+
+    .evidence-item {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 12px 15px;
+        border-bottom: 1px solid #f1f3f5;
+    }
+
+    .evidence-item:last-child {
+        border-bottom: 0;
+    }
+
+    .evidence-type {
+        padding: 5px 7px;
+        border-radius: 5px;
+        background: #fee2e2;
+        color: #b91c1c;
+        font-size: 9px;
+        font-weight: 700;
+    }
+
+    .evidence-info {
+        flex: 1;
+    }
+
+    .evidence-info strong {
+        display: block;
+        font-size: 12px;
+    }
+
+    .evidence-info span {
+        display: block;
+        margin-top: 2px;
+        font-size: 11px;
+        color: #6b7280;
+    }
+
+    .evidence-item button {
+        border: 0;
+        background: transparent;
+        color: #2563eb;
+    }
+
+
+    /* =====================================================
+       RESPONSIVO
+       ===================================================== */
+
+    @@media (max-width: 992px) {
+
+        .page-header {
+            align-items: flex-start;
+            flex-direction: column;
+        }
+
+        .page-actions {
+            width: 100%;
+        }
+
+        .page-actions .btn {
+            flex: 1;
+        }
+
+        .xml-upload-area {
+            flex-wrap: wrap;
+        }
+
+        .xml-upload-area .btn {
+            margin-left: 0;
+        }
+
+        .fiscal-ai-alert {
+            align-items: flex-start;
+            flex-wrap: wrap;
+        }
+
+        .ai-commercial-header {
+            align-items: flex-start;
+            flex-direction: column;
+        }
+
+    }
+
+</style>
+
+
+<div class="fiscal-page">
+
+    <!-- =====================================================
+         CABEÇALHO
+         ===================================================== -->
+
+    <div class="page-header">
+
+        <div>
+
+            <div class="page-breadcrumb">
+
+                <span>ERP AI</span>
+
+                <i class="bi bi-chevron-right"></i>
+
+                <span>Fiscal</span>
+
+                <i class="bi bi-chevron-right"></i>
+
+                <strong>Lançamento de Nota Fiscal</strong>
+
+            </div>
+
+            <div>
+
+                <h1 class="page-title">
+                    Lançamento de Nota Fiscal
+                </h1>
+
+                <p class="page-subtitle">
+                    Registre, valide e analise documentos fiscais.
+                </p>
+
+                <div class="order-status">
+
+                    <span class="status-dot"></span>
+
+                    Nova NF-e
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="page-actions">
+
+            <a asp-controller="Home"
+               asp-action="Index"
+               class="btn btn-light border">
+
+                <i class="bi bi-arrow-left me-2"></i>
+
+                Voltar
+
+            </a>
+
+            <button type="button"
+                    class="btn btn-light border"
+                    onclick="salvarNota()">
+
+                <i class="bi bi-save me-2"></i>
+
+                Salvar
+
+            </button>
+
+            <button type="button"
+                    class="btn btn-primary"
+                    onclick="validarNota()">
+
+                <i class="bi bi-shield-check me-2"></i>
+
+                Validar NF-e
+
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- =====================================================
+         IMPORTAÇÃO XML
+         ===================================================== -->
+
+    <div class="erp-section-card">
+
+        <div class="section-header">
+
+            <div class="section-icon blue">
+
+                <i class="bi bi-filetype-xml"></i>
+
+            </div>
+
+            <div>
+
+                <h5>
+                    Importação da NF-e
+                </h5>
+
+                <span>
+                    Importe o XML da nota fiscal eletrônica
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <div class="xml-upload-area"
+             id="xmlDropArea"
+             onclick="selecionarXml()">
+
+            <div class="xml-upload-icon">
+
+                <i class="bi bi-cloud-arrow-up"></i>
+
+            </div>
+
+            <div>
+
+                <strong>
+                    Arraste o XML aqui
+                </strong>
+
+                <span>
+                    ou clique para selecionar o arquivo
+                </span>
+
+            </div>
+
+            <button type="button"
+                    class="btn btn-outline-primary"
+                    onclick="event.stopPropagation(); selecionarXml()">
+
+                <i class="bi bi-folder2-open me-2"></i>
+
+                Selecionar XML
+
+            </button>
+
+            <input type="file"
+                   id="xmlFile"
+                   accept=".xml,text/xml"
+                   hidden
+                   onchange="xmlSelecionado(this)" />
+
+        </div>
+
+
+        <div id="xmlLoaded"
+             class="xml-loaded d-none">
+
+            <div class="xml-file-icon">
+
+                <i class="bi bi-filetype-xml"></i>
+
+            </div>
+
+            <div class="xml-file-info">
+
+                <strong id="xmlFileName">
+                    nota-fiscal.xml
+                </strong>
+
+                <span id="xmlFileDescription">
+                    Arquivo XML carregado com sucesso
+                </span>
+
+            </div>
+
+            <div class="xml-file-status">
+
+                <i class="bi bi-check-circle-fill"></i>
+
+                XML válido
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =====================================================
+         IDENTIFICAÇÃO
+         ===================================================== -->
+
+    <div class="erp-section-card">
+
+        <div class="section-header">
+
+            <div class="section-icon purple">
+
+                <i class="bi bi-receipt"></i>
+
+            </div>
+
+            <div>
+
+                <h5>
+                    Identificação da Nota Fiscal
+                </h5>
+
+                <span>
+                    Dados principais do documento fiscal
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <div class="row g-3">
+
+            <div class="col-lg-2">
+
+                <label class="form-label required">
+                    Número
+                </label>
+
+                <input type="text"
+                       id="numeroNota"
+                       class="form-control"
+                       placeholder="Número" />
+
+            </div>
+
+
+            <div class="col-lg-2">
+
+                <label class="form-label">
+                    Série
+                </label>
+
+                <input type="text"
+                       id="serieNota"
+                       class="form-control"
+                       placeholder="Série" />
+
+            </div>
+
+
+            <div class="col-lg-5">
+
+                <label class="form-label">
+                    Chave de acesso
+                </label>
+
+                <input type="text"
+                       id="chaveNota"
+                       class="form-control"
+                       placeholder="Chave de acesso"
+                       readonly />
+
+            </div>
+
+
+            <div class="col-lg-3">
+
+                <label class="form-label">
+                    Data emissão
+                </label>
+
+                <input type="date"
+                       id="dataEmissao"
+                       class="form-control" />
+
+            </div>
+
+
+            <div class="col-lg-4">
+
+                <label class="form-label">
+                    Tipo de operação
+                </label>
+
+                <select class="form-select">
+
+                    <option selected>
+                        Entrada
+                    </option>
+
+                    <option>
+                        Saída
+                    </option>
+
+                    <option>
+                        Devolução
+                    </option>
+
+                    <option>
+                        Transferência
+                    </option>
+
+                </select>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =====================================================
+         FORNECEDOR
+         ===================================================== -->
+
+    <div class="erp-section-card">
+
+        <div class="section-header">
+
+            <div class="section-icon orange">
+
+                <i class="bi bi-building"></i>
+
+            </div>
+
+            <div>
+
+                <h5>
+                    Dados do fornecedor
+                </h5>
+
+                <span>
+                    Emitente da nota fiscal
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <div class="row g-3">
+
+            <div class="col-lg-6">
+
+                <label class="form-label required">
+                    Fornecedor
+                </label>
+
+                <input type="text"
+                       id="fornecedorNome"
+                       class="form-control"
+                       placeholder="Razão social do fornecedor"
+                       readonly />
+
+            </div>
+
+
+            <div class="col-lg-3">
+
+                <label class="form-label">
+                    CNPJ
+                </label>
+
+                <input type="text"
+                       id="fornecedorCnpj"
+                       class="form-control"
+                       placeholder="CNPJ"
+                       readonly />
+
+            </div>
+
+
+            <div class="col-lg-3">
+
+                <label class="form-label">
+                    UF
+                </label>
+
+                <input type="text"
+                       id="fornecedorUf"
+                       class="form-control"
+                       placeholder="UF"
+                       readonly />
+
+            </div>
+
+
+            <div class="col-lg-4">
+
+                <label class="form-label">
+                    Inscrição Estadual
+                </label>
+
+                <input type="text"
+                       id="inscricaoEstadual"
+                       class="form-control"
+                       placeholder="Inscrição Estadual" />
+
+            </div>
+
+
+            <div class="col-lg-4">
+
+                <label class="form-label">
+                    Município
+                </label>
+
+                <input type="text"
+                       id="fornecedorMunicipio"
+                       class="form-control"
+                       placeholder="Município"
+                       readonly />
+
+            </div>
+
+
+            <div class="col-lg-4">
+
+                <label class="form-label">
+                    Regime tributário
+                </label>
+
+                <select class="form-select">
+
+                    <option selected>
+                        Lucro Presumido
+                    </option>
+
+                    <option>
+                        Lucro Real
+                    </option>
+
+                    <option>
+                        Simples Nacional
+                    </option>
+
+                </select>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =====================================================
+         PRODUTOS
+         ===================================================== -->
+
+    <div class="erp-section-card">
+
+        <div class="section-header section-header-items">
+
+            <div class="section-header-left">
+
+                <div class="section-icon green">
+
+                    <i class="bi bi-box-seam"></i>
+
+                </div>
+
+                <div>
+
+                    <h5>
+                        Produtos da Nota Fiscal
+                    </h5>
+
+                    <span>
+                        Itens e informações tributárias
+                    </span>
+
+                </div>
+
+            </div>
+
+            <button type="button"
+                    class="btn btn-primary btn-sm"
+                    onclick="adicionarProduto()">
+
+                <i class="bi bi-plus-lg me-1"></i>
+
+                Adicionar produto
+
+            </button>
+
+        </div>
+
+
+        <div class="table-responsive">
+
+            <table class="table fiscal-items-table">
+
+                <thead>
+
+                    <tr>
+
+                        <th>Produto</th>
+                        <th>NCM</th>
+                        <th>CFOP</th>
+                        <th>Qtd.</th>
+                        <th>Valor Unit.</th>
+                        <th>ICMS</th>
+                        <th>Status</th>
+                        <th></th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody id="fiscalItems">
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+
+    <!-- =====================================================
+         TOTAIS
+         ===================================================== -->
+
+    <div class="row g-4">
+
+        <div class="col-xl-7">
+
+            <div class="erp-section-card h-100">
+
+                <div class="section-header">
+
+                    <div class="section-icon gray">
+
+                        <i class="bi bi-chat-left-text"></i>
+
+                    </div>
+
+                    <div>
+
+                        <h5>
+                            Observações fiscais
+                        </h5>
+
+                        <span>
+                            Informações adicionais da nota
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <textarea class="form-control"
+                          id="observacoesFiscais"
+                          rows="6"
+                          placeholder="Digite observações fiscais..."></textarea>
+
+            </div>
+
+        </div>
+
+
+        <div class="col-xl-5">
+
+            <div class="erp-section-card h-100">
+
+                <div class="section-header">
+
+                    <div class="section-icon blue">
+
+                        <i class="bi bi-calculator"></i>
+
+                    </div>
+
+                    <div>
+
+                        <h5>
+                            Totais da NF-e
+                        </h5>
+
+                        <span>
+                            Resumo financeiro e tributário
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="totals-list">
+
+                    <div>
+
+                        <span>Produtos</span>
+
+                        <strong id="totalProdutos">
+                            R$ 0,00
+                        </strong>
+
+                    </div>
+
+
+                    <div>
+
+                        <span>ICMS</span>
+
+                        <strong id="totalIcms">
+                            R$ 0,00
+                        </strong>
+
+                    </div>
+
+
+                    <div>
+
+                        <span>IPI</span>
+
+                        <strong id="totalIpi">
+                            R$ 0,00
+                        </strong>
+
+                    </div>
+
+
+                    <div>
+
+                        <span>Frete</span>
+
+                        <strong id="totalFrete">
+                            R$ 0,00
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+                <div class="total-final">
+
+                    <span>
+                        Total da NF-e
+                    </span>
+
+                    <strong id="totalNota">
+                        R$ 0,00
+                    </strong>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =====================================================
+         INTELIGÊNCIA FISCAL
+         ===================================================== -->
+
+    <div class="ai-commercial-card">
+
+        <div class="ai-commercial-header">
+
+            <div class="ai-commercial-title">
+
+                <div class="ai-commercial-icon">
+
+                    <i class="bi bi-stars"></i>
+
+                </div>
+
+                <div>
+
+                    <h4>
+                        Inteligência Fiscal
+                    </h4>
+
+                    <p>
+                        Análise tributária contextual da NF-e
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="ai-analysis-status">
+
+                <span></span>
+
+                Análise simulada
+
+            </div>
+
+        </div>
+
+
+        <!-- ALERTA -->
+
+        <div class="fiscal-ai-alert">
+
+            <div class="fiscal-ai-alert-icon">
+
+                <i class="bi bi-exclamation-triangle-fill"></i>
+
+            </div>
+
+
+            <div class="fiscal-ai-alert-content">
+
+                <div class="fiscal-alert-title">
+
+                    Divergência tributária identificada
+
+                </div>
+
+                <p>
+
+                    A alíquota de ICMS informada no XML
+                    poderá ser comparada futuramente
+                    com regras fiscais, pareceres e
+                    legislações recuperadas pelo RAG.
+
+                </p>
+
+            </div>
+
+
+            <div class="fiscal-alert-badge">
+
+                Atenção
+
+            </div>
+
+        </div>
+
+
+        <!-- CARDS -->
+
+        <div class="row g-4 mt-1">
+
+            <div class="col-xl-4">
+
+                <div class="ai-result-card">
+
+                    <div class="ai-result-header">
+
+                        <div class="ai-result-symbol">
+
+                            <i class="bi bi-percent"></i>
+
+                        </div>
+
+                        <span class="ai-result-badge">
+                            XML
+                        </span>
+
+                    </div>
+
+                    <h5>
+                        Alíquota informada
+                    </h5>
+
+                    <div class="tax-comparison">
+
+                        <strong>
+                            --
+                        </strong>
+
+                        <span>
+                            Será preenchida pelo XML
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="col-xl-4">
+
+                <div class="ai-result-card">
+
+                    <div class="ai-result-header">
+
+                        <div class="ai-result-symbol blue-symbol">
+
+                            <i class="bi bi-book"></i>
+
+                        </div>
+
+                        <span class="ai-result-badge blue-badge">
+                            RAG
+                        </span>
+
+                    </div>
+
+                    <h5>
+                        Evidência encontrada
+                    </h5>
+
+                    <p>
+
+                        Futuramente o RAG irá recuperar
+                        pareceres, legislações e regras
+                        fiscais relacionadas ao NCM.
+
+                    </p>
+
+                    <button type="button"
+                            class="ai-evidence-link">
+
+                        <i class="bi bi-file-text"></i>
+
+                        Ver evidências
+
+                        <i class="bi bi-arrow-right"></i>
+
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <div class="col-xl-4">
+
+                <div class="ai-result-card">
+
+                    <div class="ai-result-header">
+
+                        <div class="ai-result-symbol green-symbol">
+
+                            <i class="bi bi-shield-check"></i>
+
+                        </div>
+
+                        <span class="ai-result-badge green-badge">
+                            Regra fiscal
+                        </span>
+
+                    </div>
+
+                    <h5>
+                        Validação
+                    </h5>
+
+                    <p>
+
+                        A validação tributária será
+                        executada posteriormente pelo
+                        mecanismo de regras + RAG.
+
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- RECOMENDAÇÃO -->
+
+        <div class="ai-recommendation">
+
+            <div class="recommendation-icon">
+
+                <i class="bi bi-lightbulb"></i>
+
+            </div>
+
+
+            <div class="recommendation-content">
+
+                <strong>
+                    Recomendação da IA
+                </strong>
+
+                <p>
+
+                    Após a integração com o RAG,
+                    o sistema poderá recomendar
+                    uma ação fiscal baseada nas
+                    evidências recuperadas.
+
+                </p>
+
+            </div>
+
+
+            <button type="button"
+                    class="btn btn-outline-primary"
+                    onclick="abrirAnaliseFiscal()">
+
+                Ver análise completa
+
+            </button>
+
+        </div>
+
+
+        <!-- EVIDÊNCIAS -->
+
+        <div class="ai-evidence">
+
+            <div class="evidence-header">
+
+                <span>
+
+                    <i class="bi bi-database me-1"></i>
+
+                    Evidências
+
+                </span>
+
+                <span class="evidence-count">
+
+                    RAG ainda não conectado
+
+                </span>
+
+            </div>
+
+
+            <div class="evidence-item">
+
+                <div class="evidence-type">
+                    RAG
+                </div>
+
+                <div class="evidence-info">
+
+                    <strong>
+                        Base de conhecimento fiscal
+                    </strong>
+
+                    <span>
+                        Será conectada ao Qdrant posteriormente
+                    </span>
+
+                </div>
+
+                <button type="button">
+
+                    <i class="bi bi-database"></i>
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+@section Scripts {
+
+    <script>
+
+        // =====================================================
+        // VARIÁVEIS
+        // =====================================================
+
+        let xmlDocument = null;
+
+
+        // =====================================================
+        // SELECIONAR XML
+        // =====================================================
+
+        function selecionarXml() {
+
+            document
+                .getElementById("xmlFile")
+                .click();
+
+        }
+
+
+        // =====================================================
+        // XML SELECIONADO
+        // =====================================================
+
+        function xmlSelecionado(input) {
+
+            if (!input.files || !input.files.length) {
+                return;
+            }
+
+            const file = input.files[0];
+
+            if (!file.name.toLowerCase().endsWith(".xml")) {
+
+                alert("Selecione um arquivo XML válido.");
+
+                input.value = "";
+
+                return;
+            }
+
+
+            const reader = new FileReader();
+
+
+            reader.onload = function (event) {
+
+                try {
+
+                    const xmlText = event.target.result;
+
+                    processarXml(
+                        xmlText,
+                        file.name
+                    );
+
+                }
+                catch (error) {
+
+                    console.error(error);
+
+                    alert(
+                        "Não foi possível processar o XML."
+                    );
+
+                }
+
+            };
+
+
+            reader.onerror = function () {
+
+                alert(
+                    "Erro ao ler o arquivo XML."
+                );
+
+            };
+
+
+            reader.readAsText(file);
+
+        }
+
+
+        // =====================================================
+        // PROCESSAR XML
+        // =====================================================
+
+        function processarXml(
+            xmlText,
+            fileName
+        ) {
+
+            const parser =
+                new DOMParser();
+
+
+            const xml =
+                parser.parseFromString(
+                    xmlText,
+                    "text/xml"
+                );
+
+
+            const parserError =
+                xml.querySelector("parsererror");
+
+
+            if (parserError) {
+
+                alert(
+                    "O arquivo selecionado não possui um XML válido."
+                );
+
+                return;
+
+            }
+
+
+            xmlDocument = xml;
+
+
+            extrairIdentificacao(xml);
+
+            extrairFornecedor(xml);
+
+            extrairProdutos(xml);
+
+
+            document
+                .getElementById("xmlFileName")
+                .innerText = fileName;
+
+
+            document
+                .getElementById("xmlFileDescription")
+                .innerText =
+                "NF-e carregada e processada com sucesso";
+
+
+            document
+                .getElementById("xmlLoaded")
+                .classList.remove("d-none");
+
+
+            console.log(
+                "XML processado com sucesso."
+            );
+
+        }
+
+
+        // =====================================================
+        // IDENTIFICAÇÃO
+        // =====================================================
+
+        function extrairIdentificacao(xml) {
+
+            const infNFe =
+                xml.querySelector("infNFe");
+
+
+            if (!infNFe) {
+
+                console.warn(
+                    "infNFe não encontrado."
+                );
+
+                return;
+
+            }
+
+
+            const numero =
+                getXmlValue(
+                    infNFe,
+                    "nNF"
+                );
+
+
+            const serie =
+                getXmlValue(
+                    infNFe,
+                    "serie"
+                );
+
+
+            let data =
+                getXmlValue(
+                    infNFe,
+                    "dhEmi"
+                );
+
+
+            if (!data) {
+
+                data =
+                    getXmlValue(
+                        infNFe,
+                        "dEmi"
+                    );
+
+            }
+
+
+            const chave =
+                infNFe.getAttribute("Id");
+
+
+            setValue(
+                "numeroNota",
+                numero
+            );
+
+
+            setValue(
+                "serieNota",
+                serie
+            );
+
+
+            if (data) {
+
+                setValue(
+                    "dataEmissao",
+                    data.substring(0, 10)
+                );
+
+            }
+
+
+            if (chave) {
+
+                setValue(
+                    "chaveNota",
+                    formatarChave(
+                        chave.replace("NFe", "")
+                    )
+                );
+
+            }
+
+        }
+
+
+        // =====================================================
+        // FORNECEDOR
+        // =====================================================
+
+        function extrairFornecedor(xml) {
+
+            const emit =
+                xml.querySelector("emit");
+
+
+            if (!emit) {
+                return;
+            }
+
+
+            const nome =
+                getXmlValue(
+                    emit,
+                    "xNome"
+                );
+
+
+            const cnpj =
+                getXmlValue(
+                    emit,
+                    "CNPJ"
+                );
+
+
+            const uf =
+                getXmlValue(
+                    emit,
+                    "UF"
+                );
+
+
+            const municipio =
+                getXmlValue(
+                    emit,
+                    "xMun"
+                );
+
+
+            setValue(
+                "fornecedorNome",
+                nome
+            );
+
+
+            setValue(
+                "fornecedorCnpj",
+                formatarCnpj(cnpj)
+            );
+
+
+            setValue(
+                "fornecedorUf",
+                uf
+            );
+
+
+            setValue(
+                "fornecedorMunicipio",
+                municipio
+            );
+
+        }
+
+
+        // =====================================================
+        // PRODUTOS
+        // =====================================================
+
+        function extrairProdutos(xml) {
+
+            const detalhes =
+                xml.querySelectorAll("det");
+
+
+            const tbody =
+                document.getElementById(
+                    "fiscalItems"
+                );
+
+
+            if (!tbody) {
+                return;
+            }
+
+
+            tbody.innerHTML = "";
+
+
+            detalhes.forEach(
+                function (det) {
+
+                    const produto =
+                        det.querySelector("prod");
+
+
+                    if (!produto) {
+                        return;
+                    }
+
+
+                    const codigo =
+                        getXmlValue(
+                            produto,
+                            "cProd"
+                        );
+
+
+                    const descricao =
+                        getXmlValue(
+                            produto,
+                            "xProd"
+                        );
+
+
+                    const ncm =
+                        getXmlValue(
+                            produto,
+                            "NCM"
+                        );
+
+
+                    const cfop =
+                        getXmlValue(
+                            produto,
+                            "CFOP"
+                        );
+
+
+                    const quantidade =
+                        getXmlValue(
+                            produto,
+                            "qCom"
+                        );
+
+
+                    const valorUnitario =
+                        getXmlValue(
+                            produto,
+                            "vUnCom"
+                        );
+
+
+                    const valorTotal =
+                        getXmlValue(
+                            produto,
+                            "vProd"
+                        );
+
+
+                    const icms =
+                        extrairIcms(det);
+
+
+                    adicionarLinhaProduto(
+                        tbody,
+                        {
+                            codigo,
+                            descricao,
+                            ncm,
+                            cfop,
+                            quantidade,
+                            valorUnitario,
+                            valorTotal,
+                            icms
+                        }
+                    );
+
+                }
+            );
+
+
+            calcularTotais(xml);
+
+        }
+
+
+        // =====================================================
+        // ICMS
+        // =====================================================
+
+        function extrairIcms(det) {
+
+            const icms =
+                det.querySelector("ICMS");
+
+
+            if (!icms) {
+                return null;
+            }
+
+
+            const percentual =
+                getXmlValue(
+                    icms,
+                    "pICMS"
+                );
+
+
+            const valor =
+                getXmlValue(
+                    icms,
+                    "vICMS"
+                );
+
+
+            return {
+
+                percentual: percentual,
+
+                valor: valor
+
+            };
+
+        }
+
+
+        // =====================================================
+        // ADICIONAR LINHA
+        // =====================================================
+
+        function adicionarLinhaProduto(
+            tbody,
+            produto
+        ) {
+
+            const tr =
+                document.createElement("tr");
+
+
+            const percentualIcms =
+                produto.icms &&
+                produto.icms.percentual
+                    ? produto.icms.percentual + "%"
+                    : "-";
+
+
+            tr.innerHTML = `
+
+                <td>
+
+                    <div class="product-cell">
+
+                        <div class="product-icon">
+
+                            <i class="bi bi-box-seam"></i>
+
+                        </div>
+
+                        <div>
+
+                            <strong>
+                                ${escapeHtml(produto.descricao)}
+                            </strong>
+
+                            <span>
+                                SKU: ${escapeHtml(produto.codigo)}
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                </td>
+
+
+                <td>
+
+                    <input type="text"
+                           class="form-control form-control-sm"
+                           value="${escapeHtml(produto.ncm)}" />
+
+                </td>
+
+
+                <td>
+
+                    <input type="text"
+                           class="form-control form-control-sm"
+                           value="${escapeHtml(produto.cfop)}" />
+
+                </td>
+
+
+                <td>
+
+                    <input type="number"
+                           class="form-control form-control-sm"
+                           value="${escapeHtml(produto.quantidade)}" />
+
+                </td>
+
+
+                <td>
+
+                    <input type="number"
+                           class="form-control form-control-sm"
+                           value="${escapeHtml(produto.valorUnitario)}"
+                           step="0.01" />
+
+                </td>
+
+
+                <td>
+
+                    <strong>
+                        ${escapeHtml(percentualIcms)}
+                    </strong>
+
+                </td>
+
+
+                <td>
+
+                    <span class="fiscal-status success">
+
+                        <i class="bi bi-check-circle"></i>
+
+                        Importado
+
+                    </span>
+
+                </td>
+
+
+                <td>
+
+                    <button type="button"
+                            class="table-action"
+                            onclick="removerProduto(this)">
+
+                        <i class="bi bi-trash"></i>
+
+                    </button>
+
+                </td>
+
+            `;
+
+
+            tbody.appendChild(tr);
+
+        }
+
+
+        // =====================================================
+        // ADICIONAR PRODUTO MANUALMENTE
+        // =====================================================
+
+        function adicionarProduto() {
+
+            const tbody =
+                document.getElementById(
+                    "fiscalItems"
+                );
+
+
+            const tr =
+                document.createElement("tr");
+
+
+            tr.innerHTML = `
+
+                <td>
+
+                    <div class="product-cell">
+
+                        <div class="product-icon">
+
+                            <i class="bi bi-box"></i>
+
+                        </div>
+
+                        <div>
+
+                            <strong>
+                                Novo produto
+                            </strong>
+
+                            <span>
+                                Inclusão manual
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                </td>
+
+                <td>
+
+                    <input type="text"
+                           class="form-control form-control-sm"
+                           placeholder="NCM" />
+
+                </td>
+
+                <td>
+
+                    <input type="text"
+                           class="form-control form-control-sm"
+                           placeholder="CFOP" />
+
+                </td>
+
+                <td>
+
+                    <input type="number"
+                           class="form-control form-control-sm"
+                           value="1" />
+
+                </td>
+
+                <td>
+
+                    <input type="number"
+                           class="form-control form-control-sm"
+                           value="0"
+                           step="0.01" />
+
+                </td>
+
+                <td>
+                    -
+                </td>
+
+                <td>
+
+                    <span class="fiscal-status">
+
+                        Pendente
+
+                    </span>
+
+                </td>
+
+                <td>
+
+                    <button type="button"
+                            class="table-action"
+                            onclick="removerProduto(this)">
+
+                        <i class="bi bi-trash"></i>
+
+                    </button>
+
+                </td>
+
+            `;
+
+
+            tbody.appendChild(tr);
+
+        }
+
+
+        // =====================================================
+        // REMOVER PRODUTO
+        // =====================================================
+
+        function removerProduto(button) {
+
+            const row =
+                button.closest("tr");
+
+
+            if (row) {
+
+                row.remove();
+
+            }
+
+        }
+
+
+        // =====================================================
+        // TOTAIS
+        // =====================================================
+
+        function calcularTotais(xml) {
+
+            const totalProdutos =
+                getXmlValueFromDocument(
+                    xml,
+                    "vProd"
+                );
+
+
+            const totalIcms =
+                getXmlValueFromDocument(
+                    xml,
+                    "vICMS"
+                );
+
+
+            const totalIpi =
+                getXmlValueFromDocument(
+                    xml,
+                    "vIPI"
+                );
+
+
+            const totalFrete =
+                getXmlValueFromDocument(
+                    xml,
+                    "vFrete"
+                );
+
+
+            const totalNota =
+                getXmlValueFromDocument(
+                    xml,
+                    "vNF"
+                );
+
+
+            setText(
+                "totalProdutos",
+                formatarMoeda(totalProdutos)
+            );
+
+
+            setText(
+                "totalIcms",
+                formatarMoeda(totalIcms)
+            );
+
+
+            setText(
+                "totalIpi",
+                formatarMoeda(totalIpi)
+            );
+
+
+            setText(
+                "totalFrete",
+                formatarMoeda(totalFrete)
+            );
+
+
+            setText(
+                "totalNota",
+                formatarMoeda(totalNota)
+            );
+
+        }
+
+
+        // =====================================================
+        // PEGAR VALOR NO DOCUMENTO
+        // =====================================================
+
+        function getXmlValueFromDocument(
+            xml,
+            tagName
+        ) {
+
+            const elements =
+                xml.getElementsByTagNameNS(
+                    "*",
+                    tagName
+                );
+
+
+            if (!elements.length) {
+                return "0";
+            }
+
+
+            return elements[0]
+                .textContent
+                .trim();
+
+        }
+
+
+        // =====================================================
+        // PEGAR VALOR XML
+        // =====================================================
+
+        function getXmlValue(
+            parent,
+            tagName
+        ) {
+
+            const element =
+                Array.from(
+                    parent.children
+                ).find(
+                    child =>
+                        child.localName === tagName
+                );
+
+
+            if (!element) {
+                return "";
+            }
+
+
+            return element.textContent.trim();
+
+        }
+
+
+        // =====================================================
+        // SET VALUE
+        // =====================================================
+
+        function setValue(
+            id,
+            value
+        ) {
+
+            const element =
+                document.getElementById(id);
+
+
+            if (element) {
+
+                element.value =
+                    value || "";
+
+            }
+
+        }
+
+
+        // =====================================================
+        // SET TEXT
+        // =====================================================
+
+        function setText(
+            id,
+            value
+        ) {
+
+            const element =
+                document.getElementById(id);
+
+
+            if (element) {
+
+                element.innerText =
+                    value || "R$ 0,00";
+
+            }
+
+        }
+
+
+        // =====================================================
+        // FORMATAR CNPJ
+        // =====================================================
+
+        function formatarCnpj(cnpj) {
+
+            if (!cnpj) {
+                return "";
+            }
+
+
+            cnpj =
+                cnpj.replace(
+                    /\D/g,
+                    ""
+                );
+
+
+            if (cnpj.length !== 14) {
+                return cnpj;
+            }
+
+
+            return cnpj.replace(
+                /^(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})$/,
+                "$1.$2.$3/$4-$5"
+            );
+
+        }
+
+
+        // =====================================================
+        // FORMATAR CHAVE
+        // =====================================================
+
+        function formatarChave(chave) {
+
+            if (!chave) {
+                return "";
+            }
+
+
+            chave =
+                chave.replace(
+                    /\D/g,
+                    ""
+                );
+
+
+            return chave
+                .replace(
+                    /(.{4})/g,
+                    "$1 "
+                )
+                .trim();
+
+        }
+
+
+        // =====================================================
+        // FORMATAR MOEDA
+        // =====================================================
+
+        function formatarMoeda(valor) {
+
+            const numero =
+                parseFloat(
+                    String(valor)
+                        .replace(",", ".")
+                );
+
+
+            if (isNaN(numero)) {
+
+                return "R$ 0,00";
+
+            }
+
+
+            return numero.toLocaleString(
+                "pt-BR",
+                {
+                    style: "currency",
+                    currency: "BRL"
+                }
+            );
+
+        }
+
+
+        // =====================================================
+        // ESCAPE HTML
+        // =====================================================
+
+        function escapeHtml(value) {
+
+            if (
+                value === null ||
+                value === undefined
+            ) {
+
+                return "";
+
+            }
+
+
+            return String(value)
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#039;");
+
+        }
+
+
+        // =====================================================
+        // SALVAR
+        // =====================================================
+
+        function salvarNota() {
+
+            alert(
+                "Nota Fiscal salva como rascunho."
+            );
+
+        }
+
+
+        // =====================================================
+        // VALIDAR
+        // =====================================================
+
+        function validarNota() {
+
+            const numero =
+                document.getElementById(
+                    "numeroNota"
+                ).value;
+
+
+            const fornecedor =
+                document.getElementById(
+                    "fornecedorNome"
+                ).value;
+
+
+            if (!numero) {
+
+                alert(
+                    "Informe ou importe o número da NF-e."
+                );
+
+                return;
+
+            }
+
+
+            if (!fornecedor) {
+
+                alert(
+                    "Importe um XML válido para identificar o fornecedor."
+                );
+
+                return;
+
+            }
+
+
+            alert(
+                "NF-e pronta para a etapa de validação fiscal."
+            );
+
+        }
+
+
+        // =====================================================
+        // ANÁLISE FISCAL
+        // =====================================================
+
+        function abrirAnaliseFiscal() {
+
+            alert(
+                "A análise completa será conectada ao RAG + Qdrant nas próximas etapas."
+            );
+
+        }
+
+
+        // =====================================================
+        // DRAG AND DROP
+        // =====================================================
+
+        const dropArea =
+            document.getElementById(
+                "xmlDropArea"
+            );
+
+
+        if (dropArea) {
+
+            dropArea.addEventListener(
+                "dragover",
+                function(event) {
+
+                    event.preventDefault();
+
+                    dropArea.classList.add(
+                        "drag-over"
+                    );
+
+                }
+            );
+
+
+            dropArea.addEventListener(
+                "dragleave",
+                function() {
+
+                    dropArea.classList.remove(
+                        "drag-over"
+                    );
+
+                }
+            );
+
+
+            dropArea.addEventListener(
+                "drop",
+                function(event) {
+
+                    event.preventDefault();
+
+                    dropArea.classList.remove(
+                        "drag-over"
+                    );
+
+
+                    const files =
+                        event.dataTransfer.files;
+
+
+                    if (!files.length) {
+                        return;
+                    }
+
+
+                    const input =
+                        document.getElementById(
+                            "xmlFile"
+                        );
+
+
+                    /*
+                     * Alguns navegadores não permitem
+                     * atribuir diretamente files.
+                     *
+                     * Nesse caso usamos o primeiro
+                     * arquivo diretamente.
+                     */
+
+                    processarArquivo(
+                        files[0]
+                    );
+
+                }
+            );
+
+        }
+
+
+        // =====================================================
+        // PROCESSAR ARQUIVO
+        // =====================================================
+
+        function processarArquivo(file) {
+
+            if (
+                !file.name
+                    .toLowerCase()
+                    .endsWith(".xml")
+            ) {
+
+                alert(
+                    "Selecione um arquivo XML válido."
+                );
+
+                return;
+
+            }
+
+
+            const reader =
+                new FileReader();
+
+
+            reader.onload =
+                function(event) {
+
+                    processarXml(
+                        event.target.result,
+                        file.name
+                    );
+
+                };
+
+
+            reader.onerror =
+                function() {
+
+
+                    alert(
+                        "Erro ao ler o arquivo XML."
+                    );
+
+                };
+
+
+            reader.readAsText(file);
+
+        }
+
+    </script>
+
+}
